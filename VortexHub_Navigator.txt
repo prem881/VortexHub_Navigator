@@ -1,0 +1,29 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+-- สร้าง ScreenGui และ TextLabel
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player.PlayerGui
+
+local label = Instance.new("TextLabel")
+label.Parent = screenGui
+label.Size = UDim2.new(0, 300, 0, 50)  -- ขนาดของ label
+label.Position = UDim2.new(0.5, -150, 0, 20)  -- อยู่กลางจอแต่ไม่รบกวนผู้เล่น
+label.TextSize = 30  -- ขนาดตัวอักษรใหญ่
+label.TextColor3 = Color3.fromRGB(255, 0, 0)  -- สีตัวหนังสือเป็นสีแดง
+label.BackgroundTransparency = 1  -- ทำให้พื้นหลังโปร่งใส
+label.Font = Enum.Font.GothamBold  -- ใช้ฟอนต์ที่ชัดเจน
+label.Text = "X: " .. humanoidRootPart.Position.X .. " Y: " .. humanoidRootPart.Position.Y .. " Z: " .. humanoidRootPart.Position.Z
+
+-- ฟังก์ชันเพื่ออัพเดทพิกัด
+local function updateCoordinates()
+    local position = humanoidRootPart.Position
+    label.Text = "X: " .. math.floor(position.X) .. " Y: " .. math.floor(position.Y) .. " Z: " .. math.floor(position.Z)
+end
+
+-- อัพเดทพิกัดทุกๆ 0.1 วินาที
+while true do
+    updateCoordinates()
+    wait(0.1)  -- อัพเดททุก 0.1 วินาที
+end
